@@ -1,0 +1,57 @@
+package ex5_1_2;
+
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+/*
+ * java database connection 
+ * 连接数据库，将数据库中的数据进行增删改查
+ */
+
+public class DatabaseConnection {
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Connection conn=null;
+		String sql="select * from orders";  //SQL查询语句
+		Statement stmt;          //语句对象，可接受和执行一条SQL语句
+		ResultSet rs;            //结果记录集，用于保存查询后返回的结果
+
+		//数据库连接字符串
+		try
+		{
+			//加载驱动程序
+			//建立连接
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/cap";
+            conn = DriverManager.getConnection(url, "root","root");//和密码
+            
+			stmt=conn.createStatement();
+			rs=stmt.executeQuery(sql);  //执行查询语句并返回结果
+
+			while(rs.next())  //循环显示结果
+			{ 
+				System.out.print(rs.getString("ordno")+" ");
+				System.out.print(rs.getString("month")+" ");
+				System.out.print(rs.getString("cid")+" ");
+				System.out.print(rs.getString("aid")+" ");
+				System.out.print(rs.getString("pid")+" ");
+				System.out.print(rs.getInt("qty")+" ");
+				System.out.println(rs.getDouble("dollars")+" ");
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	
+	
+
+}
